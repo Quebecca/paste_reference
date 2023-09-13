@@ -98,16 +98,19 @@ class PageLayoutController
 
         if (!empty($clipBoard) && !empty($clipBoard['el'])) {
             $clipBoardElement = GeneralUtility::trimExplode('|', key($clipBoard['el']));
+            $ctype = '';
+            $listType = '';
             if ($clipBoardElement[0] === 'tt_content') {
                 $clipBoardElementData = BackendUtility::getRecord('tt_content', (int)$clipBoardElement[1]);
-                $pAddExtOnReadyCode .= '
-            top.clipBoardElementCType = ' . json_encode($clipBoardElementData['CType']) . ';
-            top.clipBoardElementListType = ' . json_encode($clipBoardElementData['list_type']) . ';';
-            } else {
-                $pAddExtOnReadyCode .= "
-            top.clipBoardElementCType = '';
-            top.clipBoardElementListType = '';";
             }
+             // copied tt_content could have been deleted…
+            if ($clipBoardElementData ?? false) {
+                $ctype = json_encode($clipBoardElementData['CType']);
+                $listType = json_encode($clipBoardElementData['list_type']);
+            }
+            $pAddExtOnReadyCode .= "
+            top.clipBoardElementCType = '$ctype';
+            top.clipBoardElementListType = '$listType';";
         }
 
         if (!(bool)($this->extensionConfiguration['disableCopyFromPageButton'] ?? false)
