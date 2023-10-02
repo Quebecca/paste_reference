@@ -26,7 +26,6 @@ $EM_CONF[$_EXTKEY] = [
         ],
     ],
     'state' => 'stable',
-    'clearCacheOnLoad' => true,
     'author' => 'Ephraim Härer',
     'author_email' => 'mail@ephra.im',
     'author_company' => 'private',
