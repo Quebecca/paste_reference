@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace EHAERER\PasteReference\Hooks;
+namespace EHAERER\PasteReference\EventListener;
 
 /***************************************************************
  *  Copyright notice
@@ -24,6 +24,7 @@ namespace EHAERER\PasteReference\Hooks;
 
 use EHAERER\PasteReference\Helper\Helper;
 use TYPO3\CMS\Backend\Clipboard\Clipboard;
+use TYPO3\CMS\Backend\Controller\Event\ModifyPageLayoutContentEvent;
 use TYPO3\CMS\Backend\Routing\Exception\RouteNotFoundException;
 use TYPO3\CMS\Backend\Routing\UriBuilder;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
@@ -55,7 +56,7 @@ class PageLayoutController
         $this->iconFactory = GeneralUtility::makeInstance(IconFactory::class);
     }
 
-    public function drawHeaderHook(array $parameters, \TYPO3\CMS\Backend\Controller\PageLayoutController $pageLayoutController)
+    public function __invoke(ModifyPageLayoutContentEvent $event)
     {
         $this->pageRenderer->loadRequireJsModule('TYPO3/CMS/PasteReference/PasteReferenceOnReady');
         $this->pageRenderer->loadRequireJsModule('TYPO3/CMS/PasteReference/PasteReferenceDragDrop');

@@ -4,7 +4,7 @@ defined('TYPO3') || die();
 
 (static function () {
 
-    $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['cms/layout/db_layout.php']['drawHeaderHook']['gridelements'] = \EHAERER\PasteReference\Hooks\PageLayoutController::class . '->drawHeaderHook';
+    //$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['cms/layout/db_layout.php']['drawHeaderHook']['gridelements'] = \EHAERER\PasteReference\Hooks\PageLayoutController::class . '->drawHeaderHook';
 
     $GLOBALS['TBE_STYLES']['skins']['paste_reference']['name'] = 'paste_reference';
     $GLOBALS['TBE_STYLES']['skins']['paste_reference']['stylesheetDirectories']['paste_reference_structure'] = 'EXT:paste_reference/Resources/Public/Backend/Css/Skin/';

@@ -4,3 +4,9 @@ services:
       - name: event.listener
         identifier: 'paste_reference-after-tca-compilation-event'
         event: TYPO3\CMS\Core\Configuration\Event\AfterTcaCompilationEvent
+  EHAERER\PasteReference\EventListener\PageLayoutController:
+    public: true
+    tags:
+      - name: event.listener
+        identifier: 'page-layout-controller-event'
+        event: TYPO3\CMS\Backend\Controller\Event\ModifyPageLayoutContentEvent
