@@ -89,8 +89,7 @@ class PageLayoutController
                 top.pasteReferenceAllowed = ' . ($this->getBackendUser()->checkAuthMode(
                     'tt_content',
                     'CType',
-                    'shortcut',
-                    $GLOBALS['TYPO3_CONF_VARS']['BE']['explicitADmode']
+                    'shortcut'
                 ) ? 'true' : 'false') . ';
                 top.browserUrl = ' . json_encode((string)$uriBuilder->buildUriFromRoute('wizard_element_browser')) . ';';
         } catch (RouteNotFoundException $e) {
