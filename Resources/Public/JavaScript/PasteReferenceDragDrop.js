@@ -215,7 +215,7 @@ define(['jquery', 'jquery-ui/droppable', 'TYPO3/CMS/Backend/LayoutModule/DragDro
 
                 // fire the request, and show a message if it has failed
                 require(['TYPO3/CMS/Backend/AjaxDataHandler'], function (DataHandler) {
-                    DataHandler.process(parameters).done(function (result) {
+                    DataHandler.process(parameters).then(async function (result) {
                         if (!result.hasErrors) {
                             // insert draggable on the new position
                             if (!$pasteAction) {
@@ -251,7 +251,7 @@ define(['jquery', 'jquery-ui/droppable', 'TYPO3/CMS/Backend/LayoutModule/DragDro
                 }
                 // fire the request, and show a message if it has failed
                 require(['TYPO3/CMS/Backend/AjaxDataHandler'], function (DataHandler) {
-                    DataHandler.process(parameters).done(function (result) {
+                    DataHandler.process(parameters).then(async function (result) {
                         if (!result.hasErrors) {
                             // insert draggable on the new position
                             if (!$pasteAction) {
@@ -281,7 +281,7 @@ define(['jquery', 'jquery-ui/droppable', 'TYPO3/CMS/Backend/LayoutModule/DragDro
                 };
                 // fire the request, and show a message if it has failed
                 require(['TYPO3/CMS/Backend/AjaxDataHandler'], function (DataHandler) {
-                    DataHandler.process(parameters).done(function (result) {
+                    DataHandler.process(parameters).then( async function (result) {
                         if (!result.hasErrors) {
                             // insert draggable on the new position
                             if (!$pasteAction) {
