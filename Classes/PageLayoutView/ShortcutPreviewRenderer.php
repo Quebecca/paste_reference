@@ -27,6 +27,7 @@ use Doctrine\DBAL\Driver\Exception;
 use EHAERER\PasteReference\Helper\Helper;
 use TYPO3\CMS\Backend\Preview\PreviewRendererInterface;
 use TYPO3\CMS\Backend\Preview\StandardContentPreviewRenderer;
+use TYPO3\CMS\Backend\Tree\View\PageTreeView;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Backend\View\BackendLayout\Grid\GridColumnItem;
 use TYPO3\CMS\Backend\View\PageLayoutView;
@@ -177,12 +178,17 @@ class ShortcutPreviewRenderer extends StandardContentPreviewRenderer implements 
     {
         $itemList = str_replace('pages_', '', $shortcutItem);
         if ($recursive) {
-            if (!$this->tree instanceof QueryGenerator) {
+            // QueryGenerator was deleted - BC 96107
+            /*   if (!$this->tree instanceof QueryGenerator) {
                 $this->tree = GeneralUtility::makeInstance(QueryGenerator::class);
             }
-            $itemList = $this->tree->getTreeList($itemList, $recursive, 0, 1);
+            $itemList = $this->tree->getTreeList($itemList, $recursive, 0, 1);*/
+            $pageTree = GeneralUtility::makeInstance(PageTreeView::class);
+            $itemList = $pageTree->getTree($itemList, $recursive)->ids;
         }
-        $itemList = GeneralUtility::intExplode(',', $itemList);
+
+
+        //$itemList = GeneralUtility::intExplode(',', $itemList);
 
         $queryBuilder = $this->getQueryBuilder();
         $result = $queryBuilder
