@@ -53,43 +53,43 @@ class ProcessCmdmap extends AbstractDataHandler
         bool|array  $pasteUpdate = false
     ): void
     {
-        $this->init($table, $id, $parentObj);
-        /** @var ServerRequestInterface $request */
-        $request = $GLOBALS['TYPO3_REQUEST'];
-        $queryParams = $request->getQueryParams();
-        $reference = isset($queryParams['reference']) ? (int)$queryParams['reference'] : null;
+        if($table === 'tt_content'){
+            $this->init($table, $id, $parentObj);
+            /** @var ServerRequestInterface $request */
+            $request = $GLOBALS['TYPO3_REQUEST'];
+            $queryParams = $request->getQueryParams();
+            $reference = isset($queryParams['reference']) ? (int)$queryParams['reference'] : null;
 
-        if ($command === 'copy' && $reference === 1 && !$commandIsProcessed && $table === 'tt_content' && !$this->getTceMain()->isImporting) {
-            $dataArray = [
-                'pid' => $value,
-                'CType' => 'shortcut',
-                'records' => $id,
-                'header' => 'Reference',
-            ];
+            if ($command === 'copy' && $reference === 1 && !$commandIsProcessed &&  !$this->getTceMain()->isImporting) {
+                $dataArray = [
+                    'pid' => $value,
+                    'CType' => 'shortcut',
+                    'records' => $id,
+                    'header' => 'Reference',
+                ];
 
-            // used for overriding container and column with real target values
-            if (is_array($pasteUpdate) && !empty($pasteUpdate)) {
-                $dataArray = array_merge($dataArray, $pasteUpdate);
-            }
-
-            $clipBoard = $queryParams['CB'] ??= null;
-            if (!empty($clipBoard)) {
-                $updateArray = $clipBoard['update'];
-                if (!empty($updateArray)) {
-                    $dataArray = array_merge($dataArray, $updateArray);
+                // used for overriding container and column with real target values
+                if (is_array($pasteUpdate) && !empty($pasteUpdate)) {
+                    $dataArray = array_merge($dataArray, $pasteUpdate);
                 }
+
+                $clipBoard = $queryParams['CB'] ??= null;
+                if (!empty($clipBoard)) {
+                    $updateArray = $clipBoard['update'];
+                    if (!empty($updateArray)) {
+                        $dataArray = array_merge($dataArray, $updateArray);
+                    }
+                }
+
+                $data = [];
+                $data['tt_content']['NEW234134'] = $dataArray;
+
+                $this->getTceMain()->start($data, []);
+                $this->getTceMain()->process_datamap();
+
+                $commandIsProcessed = true;
             }
 
-            $data = [];
-            $data['tt_content']['NEW234134'] = $dataArray;
-
-            $this->getTceMain()->start($data, []);
-            $this->getTceMain()->process_datamap();
-
-            $commandIsProcessed = true;
-        }
-
-        if ($table === 'tt_content') {
             $this->cleanupWorkspacesAfterFinalizing();
         }
     }
